@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orders</h1>
+<div style="display: grid; grid-template-columns: 1fr 3fr; grid-gap: 3rem">
+
+
+<turbo-frame id="sidebar" style="border: 1px cornflowerblue solid">
+  <% @orders.each do |order| %>
+    <turbo-frame id="<%= dom_id(order) %>" style="display: flex; justify-content: space-between; align-items: center; border: 1px crimson solid">
+      <h3>
+        <span>ID: <%= order.id %></span>
+        <span><%= order.status %></span>
+      </h3>
+      <div>
+        <%= link_to 'show', order_path(order), data: { "turbo-frame": :main } %>
+        <%= form_for(order) do |form| %>
+          <%= form.hidden_field(:status, value: order.next_status) %>
+          <%= form.submit "Progress to #{order.next_status}" %>
+        <% end %>
+      </div>
+    </turbo-frame>
+  <% end %>
+</turbo-frame>
+
+
+<turbo-frame id="main" style="border: 1px cornflowerblue solid">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.status %></td>
+        <td><%= link_to 'Show', order %></td>
+        <td><%= link_to 'Edit', edit_order_path(order) %></td>
+        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</turbo-frame>
+</div>
+
+<br>
+
+<%= link_to 'New Order', new_order_path %>

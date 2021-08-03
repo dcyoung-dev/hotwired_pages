@@ -1,0 +1,28 @@
+<h1>Areas#show</h1>
+<p>Find me in app/views/areas/show.html.erb</p>
+
+<p>Area Type Param <%= @area_type %></p>
+
+
+<div style="display: grid; grid-template-columns: 1fr 3fr; grid-gap: 3rem">
+  <aside id="sidebar_container">
+    <h2>Sidebar</h2>
+    <p>@sidebar_filter = <%= @sidebar_filter %></p>
+    <p>Lazy load <code><%= orders_path(status: @sidebar_filter) %></code></p>
+
+    <turbo-frame id="sidebar" src="<%= orders_path(status: @sidebar_filter) %>" style="border: 1px cornflowerblue solid">
+      loading...
+    </turbo-frame>
+  </aside>
+
+
+  <main id="main_container" >
+    <h2>Main</h2>
+    <p>@main_filter = <%= @main_filter %></p>
+    <p>Lazy load <code><%= orders_path(status: @main_filter) %></code></p>
+
+    <turbo-frame id="main" src="<%= orders_path(status: @main_filter) %>" style="border: 1px cornflowerblue solid">
+      loading...
+    </turbo-frame>
+  </main>
+</div>
